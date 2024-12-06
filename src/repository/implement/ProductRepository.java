@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale.Category;
 
 import model.Product;
 import repository.IProductRepository;
@@ -19,7 +20,15 @@ public class ProductRepository implements IProductRepository{
   @Override
   public List<Product> get() {
     List<Product> products = new ArrayList<>();
-    String query = "SELECT * FROM tb_products";
+    // String query = "SELECT * FROM tb_products";
+
+    String query = """
+        SELECT p.id, p.name, p.price, p.description, p.stock, p.status, 
+               c.id AS category_id, c.name AS category_name
+        FROM tb_products p
+        INNER JOIN tb_m_categories c ON p.tb_m_categories_id = c.id
+    """;
+
     try {
       ResultSet resultSet = connection.prepareStatement(query).executeQuery();
       while (resultSet.next()) {
@@ -30,7 +39,13 @@ public class ProductRepository implements IProductRepository{
         product.setDescription(resultSet.getString(4));
         product.setStock(resultSet.getInt(5));
         product.setStatus(resultSet.getInt(6));
-        product.setCategoryId(resultSet.getInt(7));
+        // product.setCategoryId(resultSet.getInt(7));
+
+        model.Category category = new model.Category();
+        category.setId(resultSet.getInt("category_id"));
+        category.setName(resultSet.getString("category_name"));
+        product.setCategory(category);
+
         products.add(product);
       } 
     } catch (Exception e) {

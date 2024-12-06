@@ -8,6 +8,7 @@ public class Product {
   private Integer stock;
   private Integer status;
   private Integer categoryId;
+  private Category category;
   
   public Integer getId() {
     return id;
@@ -50,6 +51,12 @@ public class Product {
   }
   public void setCategoryId(Integer categoryId) {
     this.categoryId = categoryId;
+  }
+  public Category getCategory() {
+    return category;
+  }
+  public void setCategory(Category category) {
+    this.category = category;
   }
 
 

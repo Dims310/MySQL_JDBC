@@ -16,7 +16,7 @@ public class ProductController {
       System.out.println("Deksripsi   : " + i.getDescription());
       System.out.println("Stok        : " + i.getStock());
       System.out.println("Tersedia    : " + i.getStatus());
-      System.out.println("Kategori    : " + i.getCategoryId());
+      System.out.println("Kategori    : " + i.getCategory().getName());
       System.out.println();
     }
   }
